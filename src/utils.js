@@ -1,5 +1,13 @@
 import dayjs from 'dayjs';
 
+const getRandomElementOfArray = (items) => items[Math.floor(Math.random() * items.length)];
+
+const getRandomIntValue = (min, max) => {
+  const lowerBorder = Math.ceil(Math.min(min, max));
+  const upperBorder = Math.floor(Math.max(min, max));
+  return Math.floor(Math.random() * (upperBorder - lowerBorder + 1) + lowerBorder);
+};
+
 const getTwoRandomDates = () => {
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - Math.floor(Math.random() * 365));
@@ -44,16 +52,14 @@ const getMonthAndDate = (date) => dayjs(date).format('MMM DD');
 
 const getFullDate = (date) => dayjs(date).format('DD/MM/YY HH:mm');
 
+function isEscapeKey(evt) {
+  return evt.key === 'Escape';
+}
+
 const isPastEvent = (date) => dayjs(date).isBefore(dayjs());
 
 const isPresentEvent = (dateFrom, dateTo) => dayjs(dateFrom).isBefore(dayjs()) && dayjs(dateTo).isAfter(dayjs());
 
 const isFutureEvent = (date) => dayjs(date).isAfter(dayjs());
 
-const sortByDay = (pointA, pointB) => dayjs(pointA.startDatetime).diff(dayjs(pointB.startDatetime));
-
-const sortByTime = (pointA, pointB) => dayjs(pointB.endDatetime).diff(pointB.startDatetime) - dayjs(pointA.endDatetime).diff(pointA.startDatetime);
-
-const sortByPrice = (pointA, pointB) => pointB.price - pointA.price;
-
-export { getTwoRandomDates, getDateDifference, getTime, getMonthAndDate, getFullDate, isPastEvent, isPresentEvent, isFutureEvent, sortByDay, sortByTime, sortByPrice };
+export { getRandomElementOfArray, getRandomIntValue, getTwoRandomDates, getDateDifference, getTime, getMonthAndDate, getFullDate, isEscapeKey, isFutureEvent, isPastEvent, isPresentEvent };
