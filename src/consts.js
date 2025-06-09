@@ -97,4 +97,4 @@ export {
   TIME_LIMIT,
   CITIES_LENGTH_BORDER,
   FLATPICKR_CONFIG,
-};
+}; 
