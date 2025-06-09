@@ -1,52 +1,38 @@
-import ApiService from './framework/api-service';
-import { METHOD } from './consts.js';
-import { adaptToServer } from './utils/adapter-utils.js';
+import PointListPresenter from './presenter/point-list-presenter.js';
+import PointsListModel from './model/points-list-model.js';
+import FilterPresenter from './presenter/filter-presenter.js';
+import FilterModel from './model/filter-model.js';
+import NewPointButtonPresenter from './presenter/new-point-button-presenter.js';
+import TripInfoPresenter from './presenter/trip-info-presenter.js';
+import PointsApiService from './point-api-service.js';
+import { AUTHORIZATION, END_POINT } from './consts.js';
 
-export default class PointsApiService extends ApiService {
-  get points() {
-    return this._load({ url: 'points' }).then(ApiService.parseResponse);
-  }
+const pointsListModel = new PointsListModel({ pointsApiService: new PointsApiService(END_POINT, AUTHORIZATION) });
 
-  get offers() {
-    return this._load({ url: 'offers' }).then(ApiService.parseResponse);
-  }
+const filterModel = new FilterModel();
 
-  get destinations() {
-    return this._load({ url: 'destinations' }).then(ApiService.parseResponse);
-  }
+const tripInfoPresenter = new TripInfoPresenter({
+  container: document.querySelector('.trip-main'),
+  pointsListModel: pointsListModel
+});
 
-  async updatePoint(point) {
-    const response = await this._load({
-      url: `points/${point.id}`,
-      method: METHOD.PUT,
-      body: JSON.stringify(adaptToServer(point)),
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-    });
+const newPointButtonPresenter = new NewPointButtonPresenter({
+  container: document.querySelector('.trip-main')
+});
 
-    const parsedResponse = await ApiService.parseResponse(response);
+const pointsListPresenter = new PointListPresenter({
+  tripEvents: document.querySelector('.trip-events'),
+  filterModel,
+  pointsListModel,
+  newPointButtonPresenter
+});
 
-    return parsedResponse;
-  }
-
-  async addPoint(point) {
-    const response = await this._load({
-      url: 'points',
-      method: METHOD.POST,
-      body: JSON.stringify(adaptToServer(point)),
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-    });
-
-    const parsedResponse = await ApiService.parseResponse(response);
-
-    return parsedResponse;
-  }
-
-  async deletePoint(point) {
-    const response = await this._load({
-      url: `points/${point.id}`,
-      method: METHOD.DELETE,
-    });
-
-    return response;
-  }
-}
+new FilterPresenter({
+  filterContainer: document.querySelector('.trip-controls__filters'),
+  filterModel,
+  pointsListModel
+}).init();
+newPointButtonPresenter.init({ onNewPointButtonClick: pointsListPresenter.onNewPointButtonClick });
+pointsListPresenter.init();
+pointsListModel.init();
+tripInfoPresenter.init();
