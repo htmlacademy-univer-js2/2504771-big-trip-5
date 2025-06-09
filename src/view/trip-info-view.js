@@ -37,4 +37,4 @@ export default class TripInfoView extends AbstractView {
       getTripPrice(this.#points, this.#offers)
     );
   }
-} 
+}
