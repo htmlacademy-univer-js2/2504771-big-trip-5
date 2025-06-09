@@ -830,4 +830,5 @@ main {
   .event__photo:last-child {
     padding-right: 20px; }
   .event__photo:not(:last-child) {
-    margin-right: 5px; }
+    margin-right: 5px; } 
+    
