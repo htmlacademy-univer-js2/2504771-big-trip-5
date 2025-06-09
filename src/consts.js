@@ -34,6 +34,7 @@ const ACTIONS = {
 const UPDATE_TYPES = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
   INIT: 'INIT',
 };
 
@@ -55,11 +56,30 @@ const FORM_TYPE = {
 const METHOD = {
   GET: 'GET',
   PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
+};
+
+const TIME_LIMIT = {
+  LOWER_LIMIT: 200,
+  UPPER_LIMIT: 500,
+};
+
+const FLATPICKR_CONFIG = {
+  dateFormat: 'd/m/y H:i',
+  enableTime: true,
+  locale: {
+    firstDayOfWeek: 1,
+  },
+  // eslint-disable-next-line camelcase
+  time_24hr: true,
 };
 
 const AUTHORIZATION = 'Basic fra114a3i8a7t0rr';
 
 const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
+
+const CITIES_LENGTH_BORDER = 3;
 
 export {
   EVENT_TYPES,
@@ -73,5 +93,8 @@ export {
   FORM_TYPE,
   METHOD,
   AUTHORIZATION,
-  END_POINT
+  END_POINT,
+  TIME_LIMIT,
+  CITIES_LENGTH_BORDER,
+  FLATPICKR_CONFIG,
 };
